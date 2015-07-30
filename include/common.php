@@ -29,35 +29,12 @@ function printHeader($withmenu="default") {
 
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 	header("Expires: -1");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
+    header("Cache-Control: no-store, no-cache, must-revalidate");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
 
 	?>
-	<!DOCTYPE html>
-	<head>
-	<meta charset="utf-8">
-	<title>PHPki: <?php echo $title?> </title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $style_css?>">
-	<script type="text/javascript" language="javascript">
-
-	function setVisibility(rowName, show) {
-        // Tabellenzelle ermitteln
- 
-        var actualVisibility=document.getElementById(rowName).style.visibility;
- 
-        if(show==false) {
-                document.getElementById(rowName).style.visibility = "hidden";
-                document.getElementById(rowName).style.display = "none";
-        } else {
-                document.getElementById(rowName).style.visibility = "visible";
-                document.getElementById(rowName).style.display = "";
-        }
-	}
-
-	</script>
-	</head>
-	<body>
+	
 	<?php
 
 	if (isKonq()) { 
@@ -72,8 +49,6 @@ function printHeader($withmenu="default") {
 	}
 
 	?>
-	<div class=<?php echo $logoclass?>>PHPki</div>
-	<div class=<?php echo $titleclass?>><?php echo $title?></div>
 	<?php
 
 	switch ($withmenu) {
