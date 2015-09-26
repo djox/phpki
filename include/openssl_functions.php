@@ -43,11 +43,11 @@ function CA_create_cnf($country='',$province='',$locality='',$organization='',$u
 	} else {
 		$server_altnames = "DNS:$common_name,email:copy";
 	}
-
+	
 	$cnf_contents = "
 HOME             = $config[home_dir] 
 RANDFILE         = $config[random]
-dir	             = $config[ca_dir]
+dir	         = $config[ca_dir]
 certs            = $config[cert_dir]
 crl_dir	         = $config[crl_dir]
 database         = $config[index]
@@ -61,7 +61,7 @@ crl_extentions	 = crl_ext
 default_days     = 365
 default_crl_days = 30
 preserve         = no
-default_md       = sha512
+default_md       = sha1
 
 [ req ]
 default_bits        = $keysize
@@ -142,10 +142,10 @@ nsComment              = $config[comment_root]
 nsCaPolicyUrl          = $config[base_url]$config[policy_url]
 
 [ email_ext ]
-basicConstraints       = critical, CA:false
-keyUsage               = critical, nonRepudiation, digitalSignature, keyEncipherment
-extendedKeyUsage       = critical, emailProtection, clientAuth
-nsCertType             = critical, client, email
+basicConstraints       = CA:false
+keyUsage               = nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage       = emailProtection
+nsCertType             = email
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always, issuer:always
 subjectAltName         = email:copy
@@ -283,7 +283,7 @@ function CAdb_to_array($search = '.*') {
 function CAdb_get_entry($serial) {
 	global $config;
 	$regexp = "^[VR]\t.*\t.*\t$serial\t.*\t.*$";
-    $x = exec('egrep '.escshellarg($regexp).' '.$config['index']);
+        $x = exec('egrep '.escshellarg($regexp).' '.$config['index']);
 	if ($x)
 		return CAdb_explode_entry($x);
 	else {
@@ -300,7 +300,6 @@ function CAdb_in($email="", $name="") {
 	global $config;
 	$regexp = "^[V].*CN=$name/(Email|emailAddress)=$email";
     $x =exec('egrep '.escshellarg($regexp).' '.$config['index']);
-
     if ($x) {
 		list($j,$j,$j,$serial,$j,$j) = explode("\t", $x);
 		return "$serial";
@@ -354,7 +353,8 @@ function CAdb_explode_entry($dbentry) {
 	}
 
 	sscanf(CA_cert_startdate($a[3]),"%s %s %s %s", $mm,$dd,$tt,$yy);
-	$db['issued'] = strftime("%Y-%b-%d", strtotime("$dd $mm $yy"));
+	$db['issued'] = strftime("%y-%b-%d", strtotime("$dd $mm $yy"));
+
 
 	if (strlen($a[1]) <= 13) {
 	   // date in database 'index.txt' stored in UTC format (2 digit year)
@@ -391,7 +391,7 @@ function CAdb_is_revoked($serial) {
 	$regexp = "^R\t.*\t.*\t$serial\t.*\t.*$";
         $x = exec('egrep '.escshellarg($regexp).' '.$config['index']);
 
-    if  ($x) {
+        if  ($x) {
 		list($j,$j,$revoke_date,$j,$j,$j) = explode("\t", $x);
 		sscanf($revoke_date, "%2s%2s%2s",$yy,$mm,$dd);
 		return strftime("%b %d, %Y", strtotime("$mm/$dd/$yy"));
@@ -407,7 +407,7 @@ function CAdb_is_valid($serial) {
 	global $config;
 	$regexp = "^V\t.*\t.*\t$serial\t.*\t.*$";
 
-    if  (exec('egrep '.escshellarg($regexp).' '.$config['index']))
+        if  (exec('egrep '.escshellarg($regexp).' '.$config['index']))
 		return true;
 	else
 		return false;

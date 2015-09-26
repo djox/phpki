@@ -630,11 +630,11 @@ EOS;
 	#
 	# Step aside and let the users in (create index.php files).  
 	#
-	if (! unlink('index.php')) print "Can't unlink index.php";
-	if (! unlink('setup.php')) print "Can't unlink setup.php";;
-	if (! unlink('ca/index.php')) print "Can't unlink ca/index.php";
-	if (! symlink('main.php','index.php')) print "Can't symlink main.php";
-	if (! symlink('main.php','ca/index.php')) print "Can't symlink ca/main.php";;
+	#if (! unlink('index.php')) print "Can't unlink index.php";
+	#if (! unlink('setup.php')) print "Can't unlink setup.php";;
+	#if (! unlink('ca/index.php')) print "Can't unlink ca/index.php";
+	#if (! symlink('main.php','index.php')) print "Can't symlink main.php";
+	#if (! symlink('main.php','ca/index.php')) print "Can't symlink ca/main.php";;
 
 	?>
 	<center>
@@ -683,7 +683,7 @@ E-mail: <a href=mailto:someone@somewhere.com>someone@somewhere.com</a>&nbsp;&nbs
 	if (! $store_dir) $store_dir = dirname($_SERVER['DOCUMENT_ROOT']).'/phpki-store';
 
 	if (! $base_url) $base_url = $config['base_url'];
-	if (! $base_url) $base_url = 'http://www.somewhere.com/phpki/';
+	if (! $base_url) $base_url = 'http://www.somewhere.com/';
 
 	if (! $crl_distrib) $crl_distrib = 'index.php?stage=dl_crl';
 	if (! $revoke_url) $revoke_url = 'ns_revoke_query.php?';
@@ -698,7 +698,7 @@ E-mail: <a href=mailto:someone@somewhere.com>someone@somewhere.com</a>&nbsp;&nbs
 	if (! $ca_prefix) $ca_prefix = $config['ca_prefix'];
 
 	if (! $openssl_bin) $openssl_bin = $config['openssl_bin'];
-	if (! $openssl_bin) $openssl_bin = '/usr/bin/openssl';
+	if (! $openssl_bin) $openssl_bin = '/usr/local/bin/openssl';
 
 	if (! $passwd_file) $passwd_file = $config['passwd_file'];
 	if (! $passwd_file)  $passwd_file = dirname($_SERVER['DOCUMENT_ROOT']).'/phpkipasswd';
