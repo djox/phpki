@@ -196,28 +196,28 @@ function undo_magic_quotes(&$a) {
 # Returns TRUE if argument contains only alphabetic characters.
 #
 function is_alpha($v) {
-	return (eregi('[^A-Z]',$v) ? false : true) ;
+	return (preg_match('[^A-Z]',$v) ? false : true) ;
 }
 
 #
 # Returns TRUE if argument contains only numeric characters.
 #
 function is_num($v) {
-	return (eregi('[^0-9]',$v) ? false : true) ;
+	return (preg_match('[^0-9]',$v) ? false : true) ;
 }
 
 #
 # Returns TRUE if argument contains only alphanumeric characters.
 #
 function is_alnum($v) {
-	return (eregi('[^A-Z0-9]',$v) ? false : true) ;
+	return (preg_match('[^A-Z0-9]',$v) ? false : true) ;
 }
 
 #
 # Returns TRUE if argument is in proper e-mail address format.
 #
 function is_email($v) {
-	return (eregi('^[^@ ]+\@[^@ ]+\.[A-Z]{2,4}$',$v) ? true : false);
+	return (preg_match('/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD',$v) ? true : false);
 }
 
 #
@@ -253,7 +253,7 @@ function is_fqdn($FQDN) {
 function eregi_array($regexp, $a) {
 
 foreach($a as $e) {
-	if (eregi($regexp,$e)) return true;
+	if (preg_match($regexp,$e)) return true;
 }
 return false;
 }

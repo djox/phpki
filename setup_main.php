@@ -593,7 +593,7 @@ EOS;
 	#
 	# Convert expiry years to approximate days.
 	#
-	$days = $config['expiry'] * 365.25;
+	$days = $config['expiry'] * 365;
 
 
 	#
